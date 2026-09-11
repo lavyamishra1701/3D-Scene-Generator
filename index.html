@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Scene Generator</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        font-family: sans-serif;
+        background-color: #000;
+      }
+      #canvas-container {
+        width: 100vw;
+        height: 100vh;
+      }
+      #ui-container {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        background: rgba(20, 20, 20, 0.85);
+        padding: 12px 18px;
+        border-radius: 12px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        border: 1px solid rgba(255,255,255,0.1);
+        z-index: 10;
+        width: 90%;
+        max-width: 600px;
+      }
+      #prompt-input {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 6px;
+        padding: 10px 14px;
+        color: #fff;
+        font-size: 14px;
+        outline: none;
+      }
+      #prompt-input:focus {
+        border-color: #4f46e5;
+      }
+      #generate-btn {
+        background: #4f46e5;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      #generate-btn:hover {
+        background: #4338ca;
+      }
+      #generate-btn:disabled {
+        background: #374151;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+    <div id="ui-container">
+      <input
+        type="text"
+        id="prompt-input"
+        placeholder="e.g. A neon blue floating cube over a glossy floor..."
+      />
+      <button id="generate-btn">Generate</button>
+      <button id="export-btn" style="background: #10b981; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+        Export .GLB
+      </button>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
