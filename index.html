@@ -63,21 +63,76 @@
         background: #374151;
         cursor: not-allowed;
       }
+      #suggestions-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 8px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.6);
+        width: 100%;
+      }
+      .suggestion-tag {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 3px 8px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .suggestion-tag:hover {
+        background: rgba(79, 70, 229, 0.3);
+        color: #fff;
+        border-color: rgba(79, 70, 229, 0.5);
+      }
     </style>
   </head>
   <body>
     <div id="canvas-container"></div>
-    <div id="ui-container">
-      <input
-        type="text"
-        id="prompt-input"
-        placeholder="e.g. A neon blue floating cube over a glossy floor..."
-      />
-      <button id="generate-btn">Generate</button>
-      <button id="export-btn" style="background: #10b981; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;">
-        Export .GLB
-      </button>
+    <div id="ui-container" style="flex-direction: column; align-items: stretch; gap: 8px;">
+      <!-- Scene Status Badge for Conversational Delta Editing -->
+      <div id="scene-status-badge" style="display: none; align-items: center; justify-content: space-between; background: rgba(79, 70, 229, 0.15); border: 1px solid rgba(79, 70, 229, 0.3); padding: 6px 12px; border-radius: 6px; font-size: 12px; color: #a5b4fc; width: 100%; box-sizing: border-box;">
+        <span>Active Scene: <strong id="badge-object-count">0</strong> objects</span>
+        <button id="reset-btn" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; transition: all 0.2s;">Reset Scene</button>
+      </div>
+      <div style="display: flex; gap: 10px; width: 100%;">
+        <input
+          type="text"
+          id="prompt-input"
+          placeholder="e.g. A neon blue floating cube over a glossy floor..."
+        />
+        <button id="generate-btn">Generate</button>
+        <button id="export-btn" style="background: #10b981; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+          Export .GLB
+        </button>
+      </div>
+      <div id="suggestions-container">
+        <span>Try models:</span>
+        <span class="suggestion-tag" data-val="robot">🤖 Robot</span>
+        <span class="suggestion-tag" data-val="soldier">🪖 Soldier</span>
+        <span class="suggestion-tag" data-val="car">🚗 Toy Car</span>
+        <span class="suggestion-tag" data-val="truck">🚚 Milk Truck</span>
+        <span class="suggestion-tag" data-val="flamingo">🦩 Flamingo</span>
+        <span class="suggestion-tag" data-val="parrot">🦜 Parrot</span>
+        <span class="suggestion-tag" data-val="stork">🦢 Stork</span>
+        <span class="suggestion-tag" data-val="duck">🦆 Duck</span>
+        <span class="suggestion-tag" data-val="avocado">🥑 Avocado</span>
+        <span class="suggestion-tag" data-val="lantern">🏮 Lantern</span>
+      </div>
     </div>
     <script type="module" src="/main.js"></script>
+    <script>
+      // Quick interactive suggestions insertion
+      document.addEventListener('DOMContentLoaded', () => {
+        const input = document.getElementById('prompt-input');
+        document.querySelectorAll('.suggestion-tag').forEach(tag => {
+          tag.addEventListener('click', () => {
+            const val = tag.getAttribute('data-val');
+            input.value = `A scene with a 3D low-poly ${val} sitting on a glossy colorful floor, with cinematic studio lighting`;
+            input.focus();
+          });
+        });
+      });
+    </script>
   </body>
 </html>
